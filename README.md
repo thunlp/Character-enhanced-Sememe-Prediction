@@ -16,11 +16,11 @@ The code for **Incorporating Chinese Characters of Words for Lexical Sememe Pred
 ### Preparation 
 1. Prepare a file that contains pre-trained Chinese word embeddings(of Google Word2Vec form). We recommend that the amount of words be at least 200,000 and the number of dimentions be at least 200. It will achieve much better result using a large (20GB or more is recommended) corpus to train your embeddings for running this program. 
 
-2. Rename the word embedding file as 'embedding_200.txt' and put it in the repository root directory.
+2. Rename the word embedding file as `embedding_200.txt` and put it in the repository root directory.
 
 3. Prepare a file that contains pre-trained Chinese character embeddings(of CWE form; see paper [2] and [code](https://github.com/Leonard-Xu/CWE)). We recommend that the number of dimentions be at least 200. It will achieve much better result using a large (20GB or more is recommended) corpus to train your embeddings for running this program.
 
-4. Rename the word embedding file as 'char_embedding_200.txt' and put it in the repository root directory.
+4. Rename the word embedding file as `char_embedding_200.txt` and put it in the repository root directory.
 
 5. Run `data_generator.sh`, the program will automatically generate evaluation data set and other data files required during training.
 
