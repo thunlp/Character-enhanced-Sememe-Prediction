@@ -1,0 +1,3 @@
+python SPCSE_train.py train_hownet char_embedding_200.txt sememe_all sememe_all SPCSE_embedding
+python SPCSE_prediction.py char_embedding_200.txt sememe_all SPCSE_embedding hownet.txt_test_input output_SPCSE_test model_SPCSE_test
+python scorer.py output_SPCSE hownet.txt_test_answer
