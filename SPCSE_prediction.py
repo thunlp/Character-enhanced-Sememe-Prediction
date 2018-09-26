@@ -48,6 +48,8 @@ with codecs.open(char_embedding_filename, 'r') as char_embedding_file:
                         float_arr = []
                         now_chr = arr[0].strip().decode('utf8')
                         now_pos = arr[1].strip()
+                        if (now_pos not in ["b","m","e"]):
+                            continue
                         com_chr = now_chr
                         if com_chr not in char2id:
                             char2id[com_chr] = cid

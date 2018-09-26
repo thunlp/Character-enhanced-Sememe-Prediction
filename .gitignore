@@ -1,0 +1,9 @@
+model*
+sememe_all
+*embedding*
+train*
+output*
+*log
+PMI.txt
+hownet.txt_test_*
+hownet.txt_var_*

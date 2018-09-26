@@ -53,28 +53,34 @@ with codecs.open(hownet_filename, 'r') as hownet:
             W = np.zeros((char_num, num_cluster, dim_size), dtype=np.float64)
             cid = 0
             for line in char_embedding_file:
-                arr = line.strip().split()
-                float_arr = []
-                now_chr = arr[0].strip().decode('utf8')
-                now_pos = arr[1].strip()
-                com_chr = now_chr
-                if com_chr not in char2id:
-                    char2id[com_chr] = cid
-                    id2char[cid] = com_chr
-                    cid += 1
-                    if cid % 10000 == 0:
-                        print 'cid: ' + str(cid)
-                now_cid = char2id[com_chr]
-                for i in range(2, 2 + dim_size):
-                    float_arr.append(float(arr[i]))
-                regular = math.sqrt(sum([x * x for x in float_arr]))
-                if com_chr not in char_embedding_vec:
-                    char_embedding_vec[com_chr] = []
-                char_embedding_vec[com_chr].append([])
-                cluster_id = len(char_embedding_vec[com_chr]) - 1
-                for i in range(2, 2 + dim_size):
-                    char_embedding_vec[com_chr][-1].append(float(arr[i]) / regular)
-                    W[now_cid][cluster_id][i-2] = float(arr[i]) / regular
+                try:
+                    arr = line.strip().split()
+                    float_arr = []
+                    now_chr = arr[0].strip().decode('utf8')
+                    now_pos = arr[1].strip()
+                    if (now_pos not in ["b","m","e"]):
+                        continue
+                    com_chr = now_chr
+                    if com_chr not in char2id:
+                        char2id[com_chr] = cid
+                        id2char[cid] = com_chr
+                        cid += 1
+                        if cid % 10000 == 0:
+                            print 'cid: ' + str(cid)
+                    now_cid = char2id[com_chr]
+                    for i in range(2, 2 + dim_size):
+                        float_arr.append(float(arr[i]))
+                    regular = math.sqrt(sum([x * x for x in float_arr]))
+                    if com_chr not in char_embedding_vec:
+                        char_embedding_vec[com_chr] = []
+                    char_embedding_vec[com_chr].append([])
+                    cluster_id = len(char_embedding_vec[com_chr]) - 1
+                    for i in range(2, 2 + dim_size):
+                        char_embedding_vec[com_chr][-1].append(float(arr[i]) / regular)
+                        W[now_cid][cluster_id][i-2] = float(arr[i]) / regular
+                except Exception as e:
+                    print line
+                    raise e
             print('Embedding reading complete')
 
             # read hownet
@@ -92,9 +98,12 @@ with codecs.open(hownet_filename, 'r') as hownet:
                     l = len(w_utf8)
                     for c in w_utf8:
                         try:
+                            if (c not in char2id):
+                                continue
                             wordid2charids[wid].append(char2id[c])
-                        except:
+                        except Exception as e:
                             print(word, c)
+                            raise e
                             sys.exit()
                         css += 1
                     length = len(sememes_tmp)
